@@ -23,7 +23,7 @@ import {Icon} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {formatDate, formatTime} from '../functions/getTime';
 import {DrawerActions} from '@react-navigation/native';
-import stripe from 'tipsi-stripe';
+// import stripe from 'tipsi-stripe';
 
 export default class OrderListScreen extends Component {
   constructor(props) {
@@ -38,9 +38,9 @@ export default class OrderListScreen extends Component {
 
   componentDidMount() {
     this.fetchData();
-    stripe.setOptions({
-      publishableKey: 'pk_test_5k46Yz1BbQw48FbrnqPhvDpW00wDV72QeN',
-    });
+    // stripe.setOptions({
+    //   publishableKey: 'pk_test_5k46Yz1BbQw48FbrnqPhvDpW00wDV72QeN',
+    // });
   }
 
   _onRefresh() {
@@ -67,35 +67,35 @@ export default class OrderListScreen extends Component {
       .catch((error) => console.log(error));
   }
 
-  async pay(orderId) {
-    const token = await stripe.paymentRequestWithCardForm();
-    //console.log(token);
+  // async pay(orderId) {
+  //   const token = await stripe.paymentRequestWithCardForm();
+  //   //console.log(token);
 
-    const user = auth().currentUser;
-    await user.getIdToken(true).then((idToken) => {
-      this.setState({idToken});
-    });
-    return fetch('http://35.238.55.197:8080/pay', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: this.state.idToken,
-        Payment: token.tokenId,
-      },
-      body: JSON.stringify({
-        order_id: orderId,
-      }),
-    }).then(() => {
-      this.setState({isLoading: false}, () => {
-        this.fetchData();
+  //   const user = auth().currentUser;
+  //   await user.getIdToken(true).then((idToken) => {
+  //     this.setState({idToken});
+  //   });
+  //   return fetch('http://35.238.55.197:8080/pay', {
+  //     method: 'POST',
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //       Authorization: this.state.idToken,
+  //       Payment: token.tokenId,
+  //     },
+  //     body: JSON.stringify({
+  //       order_id: orderId,
+  //     }),
+  //   }).then(() => {
+  //     this.setState({isLoading: false}, () => {
+  //       this.fetchData();
 
-        this.props.navigation.navigate('TrackScreen', {
-          orderId,
-        });
-      });
-    });
-  }
+  //       this.props.navigation.navigate('TrackScreen', {
+  //         orderId,
+  //       });
+  //     });
+  //   });
+  // }
 
   render() {
     return (
@@ -167,7 +167,7 @@ export default class OrderListScreen extends Component {
                             //   weight: item.data.Weight,
                             //   machineType: item.data.MachineType,
                             // });
-                            this.pay(item.id);
+                            // this.pay(item.id);
                             console.log(item.id);
                           } else {
                             this.props.navigation.navigate('TrackScreen', {

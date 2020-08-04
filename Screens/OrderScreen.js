@@ -30,7 +30,7 @@ import {
 import AnimatedPolyline from 'react-native-maps-animated-polyline';
 import {formatDate, formatTime} from '../functions/getTime';
 import {getPoints} from '../functions/getPoints';
-import stripe from 'tipsi-stripe';
+// import stripe from 'tipsi-stripe';
 import {StackActions} from '@react-navigation/native';
 // import { Notifications } from 'expo';
 // import * as Permissions from 'expo-permissions';
@@ -196,37 +196,37 @@ export default class OrderScreen extends Component {
   //   });
   // };
 
-  async pay(orderId) {
-    const token = await stripe.paymentRequestWithCardForm();
-    //console.log(token);
+  // async pay(orderId) {
+  //   const token = await stripe.paymentRequestWithCardForm();
+  //   //console.log(token);
 
-    const user = auth().currentUser;
-    await user.getIdToken(true).then((idToken) => {
-      this.setState({idToken});
-    });
-    return fetch('http://35.238.55.197:8080/pay', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: this.state.idToken,
-        Payment: token.tokenId,
-      },
-      body: JSON.stringify({
-        order_id: orderId,
-      }),
-    }).then(() => {
-      this.setState({isLoading: false}, () => {
-        // this.sendPushNotification();
-        this.props.navigation.dispatch(StackActions.popToTop(), () =>
-          console.log(orderId),
-        );
-        this.props.navigation.navigate('TrackScreen', {
-          orderId,
-        });
-      });
-    });
-  }
+  //   const user = auth().currentUser;
+  //   await user.getIdToken(true).then((idToken) => {
+  //     this.setState({idToken});
+  //   });
+  //   return fetch('http://35.238.55.197:8080/pay', {
+  //     method: 'POST',
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //       Authorization: this.state.idToken,
+  //       Payment: token.tokenId,
+  //     },
+  //     body: JSON.stringify({
+  //       order_id: orderId,
+  //     }),
+  //   }).then(() => {
+  //     this.setState({isLoading: false}, () => {
+  //       // this.sendPushNotification();
+  //       this.props.navigation.dispatch(StackActions.popToTop(), () =>
+  //         console.log(orderId),
+  //       );
+  //       this.props.navigation.navigate('TrackScreen', {
+  //         orderId,
+  //       });
+  //     });
+  //   });
+  // }
 
   render() {
     const dropOffTime = new Date(
@@ -365,7 +365,7 @@ export default class OrderScreen extends Component {
                         //   machineType: this.state.solution.machine_type,
                         //   orderId: response.order_id,
                         // });
-                        this.pay(response.order_id);
+                        // this.pay(response.order_id);
                       });
                     })
                     .catch((error) => {

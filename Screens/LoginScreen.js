@@ -109,19 +109,6 @@ export default class LoginScreen extends React.Component {
 
           <Button
             onPress={() => {
-              if (this.state.email != '') {
-                this.resetPword(this.state.email);
-              } else {
-                alert('Please provide your email for resetting the password.');
-              }
-            }}
-            mode="contained"
-            style={{marginTop: 20}}>
-            Login Now
-          </Button>
-
-          <Button
-            onPress={() => {
               this.props.navigation.navigate('SignupScreen');
             }}
             style={{marginTop: 20}}>
