@@ -71,9 +71,9 @@ export default class OrderScreen extends Component {
   }
 
   componentDidMount() {
-    stripe.setOptions({
-      publishableKey: 'pk_test_5k46Yz1BbQw48FbrnqPhvDpW00wDV72QeN',
-    });
+    // stripe.setOptions({
+    //   publishableKey: 'pk_test_5k46Yz1BbQw48FbrnqPhvDpW00wDV72QeN',
+    // });
     this.drawALine();
     // this.registerForPushNotificationsAsync();
 
