@@ -12,6 +12,7 @@ import {
   TextInput,
   Keyboard,
   TouchableWithoutFeedback,
+  BackHandler,
   Image,
 } from 'react-native';
 import {
@@ -89,9 +90,25 @@ export default class MapsScreen extends React.Component {
     isComplete: false,
   };
 
+  backAction = () => {
+    console.log('triggered');
+    if (this.state.headerPosition == 'down') {
+      this.toggleHeader();
+    }
+    if (this.state.filterPosition == 'up') {
+      this.closeFilter();
+    }
+    return true;
+  };
+
   componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.backAction);
     const user = auth().currentUser;
     Geocoder.init(key, {language: 'en'}); // use a valid API key
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.backAction);
   }
 
   checkPoint = {
@@ -477,6 +494,7 @@ export default class MapsScreen extends React.Component {
 
   render() {
     // console.log(this.state.startAdd);
+    console.log(this.state.headerPosition);
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.container}>
@@ -485,6 +503,11 @@ export default class MapsScreen extends React.Component {
               style={styles.mapStyle}
               ref={(ref) => (this.mapView = ref)}
               initialRegion={this.state.region}
+              onPress={() => {
+                if (this.state.filterPosition == 'up') {
+                  this.closeFilter();
+                }
+              }}
               onRegionChangeComplete={(region) => {
                 // console.log(region.latitude);
                 // console.log(region.longitude);
@@ -911,7 +934,7 @@ export default class MapsScreen extends React.Component {
                     console.log(pushObject);
 
                     this.setState({isLoading: true}, async () => {
-                      await fetch('http://35.238.55.197:8080/query', {
+                      await fetch('http://34.121.112.40:8080/query', {
                         method: 'POST',
                         headers: {
                           // Accept: 'application/json',
@@ -967,11 +990,18 @@ export default class MapsScreen extends React.Component {
                     } else {
                       if (this.state.weight <= 0) {
                         alert('Please input a valid weight.');
+                        this.toggleFilter();
+                        if (this.state.headerPosition == 'down')
+                          this.toggleHeader();
                       }
                     }
                   }
                 }}>
-                <Text style={{fontSize: 20}}>Query Solutions</Text>
+                {this.state.weight <= 0 ? (
+                  <Text style={{fontSize: 20}}>Input Weight</Text>
+                ) : (
+                  <Text style={{fontSize: 20}}>Query Solutions</Text>
+                )}
               </TouchableOpacity>
             </View>
           ) : (
@@ -1271,6 +1301,9 @@ export default class MapsScreen extends React.Component {
                     }}
                     onChangeText={(text) => {
                       this.setState({weight: text});
+                    }}
+                    onEndEditing={() => {
+                      this.closeFilter();
                     }}
                     keyboardType="numeric"
                   />

@@ -341,7 +341,7 @@ export default class OrderScreen extends Component {
                 .then((idToken) => {
                   // Send token to your backend via HTTPS
                   // ...
-                  fetch('http://35.238.55.197:8080/order', {
+                  fetch('http://34.121.112.40:8080/order', {
                     method: 'POST',
                     headers: {
                       Accept: 'application/json',
@@ -365,6 +365,9 @@ export default class OrderScreen extends Component {
                         //   machineType: this.state.solution.machine_type,
                         //   orderId: response.order_id,
                         // });
+                        this.props.navigation.navigate('TrackScreen', {
+                          orderId: response.order_id,
+                        });
                         // this.pay(response.order_id);
                       });
                     })
