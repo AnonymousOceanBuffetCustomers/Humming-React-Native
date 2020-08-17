@@ -40,6 +40,7 @@ import {DrawerActions} from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
 import {getPoints} from '../functions/getPoints';
 import AnimatedPolyline from 'react-native-maps-animated-polyline';
+import FlashMessage from 'react-native-flash-message';
 
 Keyboard.dismiss();
 if (
@@ -494,7 +495,6 @@ export default class MapsScreen extends React.Component {
 
   render() {
     // console.log(this.state.startAdd);
-    console.log(this.state.headerPosition);
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.container}>
@@ -1335,6 +1335,7 @@ export default class MapsScreen extends React.Component {
               renderContent={this.renderContent}
             />
           </View> */}
+          <FlashMessage position="top" />
         </View>
       </TouchableWithoutFeedback>
     );

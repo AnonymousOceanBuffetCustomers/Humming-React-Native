@@ -19,7 +19,6 @@ import {
 import MapView, {Marker, Callout} from 'react-native-maps';
 import {key} from '../util/GoogleAPI';
 import Polyline from '@mapbox/polyline';
-import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {Icon} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';

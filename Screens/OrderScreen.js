@@ -30,8 +30,10 @@ import {
 import AnimatedPolyline from 'react-native-maps-animated-polyline';
 import {formatDate, formatTime} from '../functions/getTime';
 import {getPoints} from '../functions/getPoints';
+import {showMessage, hideMessage} from 'react-native-flash-message';
 // import stripe from 'tipsi-stripe';
 import {StackActions} from '@react-navigation/native';
+
 // import { Notifications } from 'expo';
 // import * as Permissions from 'expo-permissions';
 // import Constants from 'expo-constants';
@@ -365,9 +367,12 @@ export default class OrderScreen extends Component {
                         //   machineType: this.state.solution.machine_type,
                         //   orderId: response.order_id,
                         // });
-                        this.props.navigation.navigate('TrackScreen', {
-                          orderId: response.order_id,
+                        showMessage({
+                          message: 'Order created',
+                          type: 'success',
                         });
+                        this.props.navigation.goBack();
+                        this.props.navigation.goBack();
                         // this.pay(response.order_id);
                       });
                     })
@@ -380,7 +385,7 @@ export default class OrderScreen extends Component {
                   console.log(error);
                 });
             }}>
-            Confirm & Pay
+            Confirm
           </Button>
         </View>
       </View>
